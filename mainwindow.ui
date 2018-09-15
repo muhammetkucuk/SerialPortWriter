@@ -201,12 +201,12 @@
     </item>
     <item>
      <property name="text">
-      <string>RTS/CTS</string>
+      <string>XON/XOFF</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>XON/XOFF</string>
+      <string>RTS/CTS</string>
      </property>
     </item>
    </widget>
