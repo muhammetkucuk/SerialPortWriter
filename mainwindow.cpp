@@ -36,6 +36,8 @@ void MainWindow::on_dataScrool_valueChanged(int value)
     ui->lcdNumber->display(value);
     if(!mSerialDeviceOperator->writeData(value))
         return;
+    QString tStr("Data sent success: " + QString::number(value));
+    ui->statusLabel->setText(tStr);
 }
 
 void MainWindow::displayAvaibleDevicesInComboBox()
@@ -50,8 +52,15 @@ void MainWindow::displayAvaibleDevicesInComboBox()
 void MainWindow::makeConnecttion()
 {
     if(mSerialDeviceOperator->isConnected())
+    {
         mSerialDeviceOperator->closeCurrentConnection();
-    mSerialDeviceOperator->startNewConnection(mCurrentPortName, mCurrentBaudRate, mCurrentDataBits,mCurenntParity, mCurrentStopBits, mCurrentFlowControl);
+        ui->statusLabel->setText("Current Connection Closed");
+    }
+    int tConnectionStatus = mSerialDeviceOperator->startNewConnection(mCurrentPortName, mCurrentBaudRate, mCurrentDataBits,mCurenntParity, mCurrentStopBits, mCurrentFlowControl);
+    if(tConnectionStatus)
+        ui->statusLabel->setText("Connected: "+mCurrentPortName);
+    else
+        ui->statusLabel->setText("Failed to connect: "+mCurrentPortName);
 }
 
 void MainWindow::on_comboBox_currentTextChanged(const QString &arg1)
